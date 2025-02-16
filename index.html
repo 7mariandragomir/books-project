@@ -3,10 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Books Tracker</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <dialog id="modal" class="new-book">
+        <form action="#">
+            <label for="in-title">Book Name:
+                <input type="text" name="in-title" id="in-title">
+            </label>
+            <label for="in-author">Author:
+                <input type="text" name="in-author" id="in-author">
+            </label>
+            <label for="in-pages">Pages:
+                <input type="number" name="in-pages" id="in-pages">
+            </label>
+            <label for="in-read">Book Name
+                <input type="checkbox" name="in-read" id="in-read">
+            </label>
+            <div>
+                <button class="close-modal" onclick="newBook.close()">Cancel</button>
+                <button type="button" onclick="newBook.addNewBook()">Add Book</button>
+            </div>
+        </form>
+    </dialog>
+    <header>
+        <h1>Books Tracker</h1>
+    </header>
+    <section id="library">
+        <button id="add-new-book" class="add-new-book" onclick="newBook.open()">+</button>
+    </section>
     <script src="script.js"></script>
 </body>
 </html>

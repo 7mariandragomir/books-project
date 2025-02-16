@@ -1,0 +1,155 @@
+:root {
+    font-size: 8px;
+
+    & h1 {
+        font-size: 6rem;
+    }
+
+    & h2, h3 {
+        font-size: 4rem;
+    }
+
+    & p, label, button {
+        font-size: 2rem;
+    }
+}
+
+body {
+    font-family: sans-serif;
+
+    height: 100vh;
+    width: 100vw;
+
+    display: grid;
+    grid-template-rows: 1fr 6fr;
+}
+
+header {
+    display: flex;
+    align-items: center;
+
+    padding: 2rem;
+}
+
+section {
+    padding: 2rem;
+
+    display: grid;
+    gap: 3rem;
+
+    grid-template-columns: repeat(auto-fit, minmax(230px, 350px));
+    grid-template-rows: repeat(auto-fit, minmax(200px, 300px));
+}
+
+.book-entry {    
+    border: .5rem solid #1d1d1d;
+    border-radius: 2rem;
+
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    padding: 2rem;
+
+    & .pages {
+        font-size: 1.5rem;
+        background-color: #1d1d1d;
+        color: #fff;
+        width: fit-content;
+        display: block;
+        padding: .5rem 1rem;
+        border-radius: 2rem;
+
+        align-self: end;
+    }
+
+    & .title {
+        line-height: 85%;
+    }
+
+    & .author { 
+        font-weight: 600;
+    }
+
+    & button {
+        height: 100%;
+        border: inherit;
+        border-radius: inherit;
+        font-style: italic;
+        color: #1d1d1d;
+        cursor: pointer;
+    }
+
+    & button.read:hover {
+        background-color: rgb(185, 235, 218);
+    }
+
+    & button.unread:hover {
+        background-color: rgb(212, 123, 123);
+    }
+
+    & button.del:hover {
+        background-color: rgb(223, 64, 64);
+    }
+}
+
+.add-new-book {
+    border: .5rem solid #1d1d1d;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    font-size: 18rem!important;
+    color: #888888;
+    cursor: pointer;
+
+    &:hover {
+        color: #383838;
+        background-color: #d1d1d1;
+    }
+}
+
+dialog.new-book {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: hsla(0, 0%, 0%, 0.2);
+    z-index: 9;
+
+}
+
+dialog > form {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+
+    background-color: #1d1d1d;
+    color: #fff;
+    border: .5rem solid #1d1d1d;
+    border-radius: 2rem;
+    padding: 2rem;
+    gap: 1rem;
+
+    & label {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+    }
+
+    & div {
+        border: inherit;
+        border-radius: inherit;
+        display: flex;
+        gap: 1rem;
+
+        & button {
+            width: 50%;
+            border: inherit;
+            border-radius: inherit;
+            cursor: pointer;
+        }
+    }
+}
