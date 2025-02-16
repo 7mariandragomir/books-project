@@ -140,15 +140,13 @@ dialog > form {
     }
 
     & div {
-        border: inherit;
-        border-radius: inherit;
         display: flex;
         gap: 1rem;
 
         & button {
             width: 50%;
-            border: inherit;
-            border-radius: inherit;
+            border: .5rem solid #1d1d1d;
+            border-radius: 2rem;
             cursor: pointer;
         }
     }
