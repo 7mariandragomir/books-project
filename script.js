@@ -86,67 +86,6 @@ function renderBook(book) {
 
 }
 
-function refreshLibrary() {
-    booksContainer.innerHTML = '';
-    myLibrary.forEach(book => {
-        
-        const entry = document.createElement('div');
-        entry.classList.add('book-entry');
-        booksContainer.appendChild(entry);
-    
-        const pages = document.createElement('p');
-        pages.classList.add('pages');
-        pages.innerHTML = `${book.pages} pages`;
-    
-        const title = document.createElement('h3');
-        title.classList.add('title');
-        title.innerHTML = book.title;
-    
-        const authorParagraph = document.createElement('p');
-        authorParagraph.innerText = `by `;
-    
-        const author = document.createElement('span');
-        author.classList.add('author');
-        author.innerHTML = book.author;
-        authorParagraph.appendChild(author);
-    
-    // Read Button Generate & functionability
-        const readButton = document.createElement('button');
-        if(book.isRead === true) {
-            readButton.classList.add('unread')
-            readButton.innerHTML = 'Mark as unread';
-        } else {
-            readButton.classList.add('read')
-            readButton.innerHTML = 'Mark as read';
-        }
-    
-        readButton.addEventListener('click', () => {
-            book.changeStatus();
-            book.isRead === true ? readButton.classList.replace('read', 'unread') : readButton.classList.replace('unread', 'read');
-            book.isRead === true ? readButton.innerHTML = 'Mark as unread' : readButton.innerHTML = 'Mark as read';
-        });
-    
-    // Delete Button Generate & functionability
-        const delButton = document.createElement('button');
-        delButton.classList.add('del');
-        delButton.innerHTML = 'Delete';
-    
-        delButton.addEventListener('click', () =>{
-            let indexOfBook = myLibrary.indexOf(book);
-            myLibrary.splice(indexOfBook, 1);
-            entry.remove();
-        })
-    
-    
-        entry.appendChild(pages);
-        entry.appendChild(title);
-        entry.appendChild(authorParagraph);
-        entry.appendChild(readButton);
-        entry.appendChild(delButton);
-    });
-}
-
-
 // Modal Functions
 
 let newBook = {
