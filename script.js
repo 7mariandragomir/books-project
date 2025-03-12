@@ -3,62 +3,93 @@ let myLibrary = [];
 const booksContainer = document.getElementById('library');
 const newBookButton = document.getElementById('add-new-book');
 
-function Book(title, author, pages, isRead) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
-    this.getInfo = function() {
-        return `${this.title} by ${this.author}, ${this.pages} pages, status: ${this.isRead}`;
-        
-    };
-    this.changeStatus = function() {
+class Book {
+    constructor(title, author, pages, isRead) {
+        this.title = title,
+        this.author = author,
+        this.pages = pages,
+        this.isRead = isRead
+    }
+
+    get bookInfo() {
+        return `${this.title} by ${this.author}, has ${this.pages}. Read status: ${this.isRead}`;
+    }
+
+    changeStatus() {
         this.isRead === true ? this.isRead = false : this.isRead = true;
     }
-}
+};
+
+class domHelp {
+    static createElement(el = "div", cls = "", id = "", innerHTML = "") {
+        let newElement = document.createElement(el);
+
+        if (cls !== undefined && cls !== null) {
+            newElement.classList.add(cls);
+        }
+
+        if (id !== undefined && id !== null) {
+            newElement.id = id;
+        }
+
+        if(innerHTML !== undefined && innerHTML !== null) {
+            newElement.innerHTML = innerHTML;
+        };
+
+        return newElement;
+    }
+
+    static renderElement(child, parent, isAdjacent = Boolean, adjacentLocation = String) {
+        if(Array.isArray(child)) { // allows for multiple children to be rendered at once
+            child.forEach(el => {
+                if(isAdjacent === true) {
+                    parent.insertAdjacentElement(adjacentLocation, el);
+                } else {
+                    parent.appendChild(el);
+                };
+            });
+        } else {
+            if(isAdjacent === true) {
+                parent.insertAdjacentElement(adjacentLocation, child);
+            } else {
+                parent.appendChild(child);
+            };
+        }
+    }
+};
 
 function addBookToLibrary(title, author, pages, isRead) {
     let newBook = new Book(title, author, pages, isRead);
-    Object.setPrototypeOf(newBook, Book);
     myLibrary.unshift(newBook);
-
-    renderBook(newBook)
+    renderBook(newBook);
 };
 
 addBookToLibrary('Dune', 'Frank Herbert', 1000, true);
 addBookToLibrary('Children of Dune', 'Frank Herbert', 900, false);
 
 function renderBook(book) {
-    const entry = document.createElement('div');
-    entry.classList.add('book-entry');
-    // booksContainer.appendChild(entry);
-    newBookButton.insertAdjacentElement('afterend', entry);
+    // new book entry element
+    const entry = domHelp.createElement('div', 'book-entry');
+    domHelp.renderElement(entry, newBookButton, true, 'afterend');
 
-    const pages = document.createElement('p');
-    pages.classList.add('pages');
-    pages.innerHTML = `${book.pages} pages`;
+    // no of pages
+    const pages = domHelp.createElement('p', 'pages', null, `${book.pages} pages`);
 
-    const title = document.createElement('h3');
-    title.classList.add('title');
-    title.innerHTML = book.title;
+    // book title
+    const title = domHelp.createElement('h3', 'title', null, book.title);
 
-    const authorParagraph = document.createElement('p');
-    authorParagraph.innerText = `by `;
-
-    const author = document.createElement('span');
-    author.classList.add('author');
-    author.innerHTML = book.author;
-    authorParagraph.appendChild(author);
+    // author 
+    const authorParagraph = domHelp.createElement('p', null, null, 'by ');
+    const author = domHelp.createElement('span', 'author', null, book.author);
+    domHelp.renderElement(author, authorParagraph);
 
 // Read Button Generate & functionability
-    const readButton = document.createElement('button');
+    let readButton;
     if(book.isRead === true) {
-        readButton.classList.add('unread')
-        readButton.innerHTML = 'Mark as unread';
+        readButton = domHelp.createElement('button', 'unread', null, 'Mark as unread');
     } else {
-        readButton.classList.add('read')
-        readButton.innerHTML = 'Mark as read';
-    }
+        readButton = domHelp.createElement('button', 'read', null, 'Mark as read');
+    };
 
     readButton.addEventListener('click', () => {
         book.changeStatus();
@@ -67,9 +98,7 @@ function renderBook(book) {
     });
 
 // Delete Button Generate & functionability
-    const delButton = document.createElement('button');
-    delButton.classList.add('del');
-    delButton.innerHTML = 'Delete';
+    const delButton = domHelp.createElement('button', 'del', null, 'Delete');
 
     delButton.addEventListener('click', () =>{
         let indexOfBook = myLibrary.indexOf(book);
@@ -77,14 +106,9 @@ function renderBook(book) {
         entry.remove();
     })
 
+    domHelp.renderElement([pages, title, authorParagraph, readButton, delButton], entry)
 
-    entry.appendChild(pages);
-    entry.appendChild(title);
-    entry.appendChild(authorParagraph);
-    entry.appendChild(readButton);
-    entry.appendChild(delButton);
-
-}
+};
 
 // Modal Functions
 
@@ -105,4 +129,4 @@ let newBook = {
         addBookToLibrary(this.titleInput.value, this.authorInput.value, this.pagesInput.value, this.readStatusInput.checked);
         this.close();
     }
-}
+};
